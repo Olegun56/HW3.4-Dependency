@@ -1,10 +1,20 @@
 package ru.netology.manager;
 
 import ru.netology.domain.Movie;
-import ru.netology.domain.PurchaseItem;
+
 
 public class MoviesManager {
+
     private Movie[] movies = new Movie[0];
+    int limit = 10;
+
+    public MoviesManager(int limit) {
+        this.limit = limit;
+    }
+
+    public MoviesManager() {
+
+    }
 
     public void add(Movie movie) {
         int lenght = movies.length + 1;
@@ -34,6 +44,18 @@ public class MoviesManager {
         }
 
         movies = tmp;
+    }
+
+    public Movie[] getMoviesWithLimit() {
+        int limit = this.limit;
+        if (limit > movies.length)
+            limit = movies.length;
+        Movie[] result = new Movie[limit];
+        for (int i = 0; i < result.length; i++) {
+            int index = movies.length - i - 1;
+            result[i] = movies[index];
+        }
+        return result;
     }
 
     public void genreSearch(String genre) {

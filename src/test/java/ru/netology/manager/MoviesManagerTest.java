@@ -3,11 +3,12 @@ package ru.netology.manager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.domain.Movie;
-import ru.netology.domain.PurchaseItem;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class MoviesManagerTest {
+
     private MoviesManager manager = new MoviesManager();
     private Movie first = new Movie(1, "Бладшот", "боевик");
     private Movie second = new Movie(2, "Вперед", "мультфильм");
@@ -75,6 +76,32 @@ class MoviesManagerTest {
 
         Movie[] actual = manager.getAll();
         Movie[] expected = new Movie[]{null, null, null, null, null, null, null, null, null,seventh, third};
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void moviesLimit() {
+        setUp();
+        Movie[] expected = new Movie[]{eleventh, tenth, ninth, eighth, seventh, sixth, fifth, fourth, third, second};
+        Movie[] actual = manager.getMoviesWithLimit();
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void moviesSetLimit() {
+        manager = new MoviesManager(5);
+        setUp();
+        Movie[] expected = new Movie[]{eleventh, tenth, ninth, eighth, seventh};
+        Movie[] actual = manager.getMoviesWithLimit();
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void moviesSetOverLimit() {
+        manager = new MoviesManager(12);
+        setUp();
+        Movie[] expected = new Movie[]{eleventh, tenth, ninth, eighth, seventh, sixth, fifth, fourth, third, second, first};
+        Movie[] actual = manager.getMoviesWithLimit();
         assertArrayEquals(expected, actual);
     }
 
